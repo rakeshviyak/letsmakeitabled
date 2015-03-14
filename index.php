@@ -22,7 +22,16 @@
     <button type="button" class="btn btn-default btn-col-md-6" autofocus="true" id="roundtrip">Round-trip</button>
     <button type="button" class="btn btn-default btn-col-md-6" id="oneway">One-way </button>
   </div>
-
+      <!-- <div class="row form-group">
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="year" id="roundtrip" value="rountrip">Round-trip
+            </label>
+            <label class="btn btn-primary" id="oneway">
+                <input type="radio" name="year" value="oneway">One-way
+            </label>
+        </div>
+      </div> -->
 
 
     <div class="form-group">

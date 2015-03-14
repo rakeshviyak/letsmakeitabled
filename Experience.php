@@ -15,11 +15,18 @@
   <div class="container" style="margin-bottom:20px;">
  
   		<h3>Flight Experience</h3>
-	  <div class="form-group" style="font-weight:bold;">Rent a wheel chair</div>
-        <div class="btn-group" role="group" style="padding-left:40px;margin-bottom: 10px;">
-  			<button type="button" class="btn btn-default" autofocus="true">Yes</button>
-  			<button type="button" class="btn btn-default">No</button>
-		</div>
+      <div class="row form-group">
+        <label for="year" class="control-label input-group">Rent a wheel chair</label>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary">
+                <input type="radio" name="year" value="yes">Yes
+            </label>
+            <label class="btn btn-primary active">
+                <input type="radio" name="year" value="no">No
+            </label>
+        </div>
+      </div>
+
 	    <div class="form-group">
 	      <label for="exampleInputName2">Seating Arrangement</label>
 	      <input type="text" class="form-control" id="exampleInputName2" placeholder="Near the toilet">
