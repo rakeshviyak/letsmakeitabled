@@ -32,12 +32,12 @@
       <input type="text" class="form-control" id="exampleInputName2" placeholder="">
     </div>
         
-		<div type="button" class="btn btn-default col-xs-12" data-toggle="modal" data-target="#myModal">Confirm Booking</div>
+		<div type="button" class="btn btn-default col-xs-12" data-toggle="modal" data-target="#byeModal">Confirm Booking</div>
 
   </div>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="byeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

@@ -7,7 +7,7 @@
         <div class="container" style="margin-top: 80px;">
 
             <div class="row">
-                <div class="col-xs-5"> {{RecordsCount.length}} results</div>
+                <div class="col-xs-5" style="font-weight:bold;"> {{RecordsCount.length}} results</div>
                 <div type="submit" class="btn btn-default col-xs-3" style="margin-right:10px;" data-toggle="modal" data-target="#myModal">Filter</div>
                 <div class="dropdown ">
                     <button class="btn btn-default col-xs-3 dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
@@ -22,14 +22,15 @@
             </div>
 
             <div class="container" style="background:rgb(242, 242, 242);margin-top: 15px;">
-                <div class="row" style="padding:15px;">
-                    <div class="col-sm-6 portfolio-item e-education">
+                <div class="row" style="padding:0px 15px 15px 15px;">
+                    <div class="col-sm-6 portfolio-item e-education" style="padding-right:0px;padding-left:0px">
                         <div ng-repeat="record in RecordsCount = ( records | orderBy:SortBy:ReverseSort | filter: searchFiltered)">
-                            <div class="row" style="margin-bottom: 20px;border-bottom:1px solid #313030;">
+                            <div class="row" style="margin-top:10px;padding-bottom:10px;border-bottom:1px solid #CECCCC;
+                            padding-right:15px;padding-left:15px">
 
-                                <div class="row">
-                                    <div class="col-xs-2"><img src="images/EmiratesFlightLogo.png" class="img-responsive" alt="" style="height:inherit;"></div>
-                                    <div class="col-xs-10" style="font-weight: bold;padding-left:0px;" data-toggle="modal" data-target="#flightdetail" ng-click="getRecord(record)">Emirates</div>
+                                <div class="container" style="padding-right:0px;padding-left:0px">
+                                    <div class="col-xs-1" style="padding-right:0px;padding-left:0px"><img src="images/EmiratesFlightLogo.png" class="img-responsive" alt="" style="height:inherit;"></div>
+                                    <div class="col-xs-10" style="font-weight: bold;padding-left:10px;" data-toggle="modal" data-target="#flightdetail" ng-click="getRecord(record)">Emirates</div>
                                 </div>
                                 <div ng-repeat="leg in record.Legs">
                                     <div class="f-detail">{{leg.DepartureTime}} {{leg.DepartureAirportCode}} &nbsp;&nbsp;<i class="fa fa-paper-plane"></i>&nbsp; {{leg.ArrivalTime}} {{leg.ArrivalAirportCode}}<span style="padding-left: 15px"><i class="fa fa-clock-o"></i>&nbsp;{{leg.Duration}}</span></div>
@@ -40,7 +41,7 @@
                                     	<div font-weight:bold;><i class="fa fa-wheelchair"></i>&nbsp;wheelchair friendly</span></div>
                                     </div>
                                 </div>
-                                <div type="submit" class="btn btn-default col-xs-3" style="margin-top:7px;" ><a href="Experience.php" style="color:inherit;">${{record.TotalFare}}</a></div>
+                                <div type="submit" class="btn btn-default col-xs-4" style="margin-top:7px;" ><a href="Experience.php" style="color:inherit;">${{record.TotalFare}}</a></div>
                             </div>
                         </div>
                     </div>
@@ -56,7 +57,9 @@
 		                    <h4 class="modal-title" id="myModalLabel">Filter Criteria</h4>
 		                </div>
 		                <div class="modal-body">
+                        <div class="form-group">
 		                    <label><input type="checkbox" ng-model="IsChair"> Wheelchair accessible toilet </label>
+                        </div>
 		                    <div class="form-group">
 		                        <label for="exampleInputName2">Max flight duration (hrs)</label>
 		                        <input type="text" class="form-control" id="exampleInputName2" placeholder="10" ng-model="MaxDuration" >

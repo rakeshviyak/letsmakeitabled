@@ -3,7 +3,7 @@
 <section class="copyright">
   <div class="container">
     <div class="row">
-      <div class="col-sm-12 text-center"> Made in Emirates hackathon </div>
+      <div class="col-xs-8">Made in Emirates hackathon</div>
     </div>
     <!-- / .row --> 
   </div>
@@ -23,7 +23,10 @@
 <script src="js/owl-carousel/owl.carousel.js"></script>
 <script>
 $('#oneway').click(function(event) {
-	$('.onewaytext').css('visibility','false');
+	$('.onewaytext').css('display','none');
+});
+$('#roundtrip').click(function(event) {
+	$('.onewaytext').css('display','');
 });
 
 </script>
