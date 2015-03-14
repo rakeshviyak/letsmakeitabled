@@ -1268,3 +1268,16 @@ nav#filter li {
 .isotopeWrapper article {
 	margin: 0px;
 }
+
+
+.line-separator{
+
+height:1px;
+
+background:#000;
+
+border-bottom:1px solid #000;
+
+}
+
+

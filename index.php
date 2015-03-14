@@ -19,8 +19,8 @@
   <h3 class="col-md-offset-3">Are you special, Lets make your travel awesome </h3>
   <form class="">
   <div class="btn-group  col-md-offset-4 col-xs-offset-4" role="group" aria-label="..." style="padding-left:75px;">
-    <button type="button" class="btn btn-default btn-col-md-6" autofocus="true">Round-trip</button>
-    <button type="button" class="btn btn-default btn-col-md-6">One-way </button>
+    <button type="button" class="btn btn-default btn-col-md-6" autofocus="true" id="roundtrip">Round-trip</button>
+    <button type="button" class="btn btn-default btn-col-md-6" id="oneway">One-way </button>
   </div>
 
 
@@ -37,7 +37,7 @@
       <label for="exampleInputName2">Depart</label>
       <input type="Date" class="form-control" id="exampleInputName2" placeholder="Depart" >
     </div>
-    <div class="form-group">
+    <div class="form-group onewaytext">
       <label for="exampleInputName2">Return</label>
       <input type="date" class="form-control" id="exampleInputName2" placeholder="Return">
     </div>
