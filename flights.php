@@ -179,7 +179,7 @@
             $scope.checkMaxDuration = function (duration) {
 
                 $scope.hIndex = duration.indexOf('h');
-                if (duration.substring(0, $scope.hIndex) >= $scope.MaxDuration) {
+                if (parseInt(duration.substring(0, $scope.hIndex)) <= parseInt($scope.MaxDuration)) {
                     return true;
                 }
                 else {
@@ -190,7 +190,7 @@
             $scope.checkMinLayover = function (layOver) {
 
                 $scope.hIndex = layOver.indexOf('h');
-                if (layOver.substring(0, $scope.hIndex) >= $scope.MinLayover) {
+                if (parseInt(layOver.substring(0, $scope.hIndex)) <= parseInt($scope.MinLayover)) {
                     return true;
                 }
                 else {
@@ -359,7 +359,7 @@
                 {
                     "DepartureAirportCode": "DXB",
                     "DepartureTime": "02:50",
-                    "Duration": "14 0m",
+                    "Duration": "14h 0m",
                     "ArrivalAirportCode": "JFK",
                     "ArrivalTime": "08:50",
                     "FlightNo": "EK203",
@@ -416,7 +416,7 @@
                 {
                     "DepartureAirportCode": "DXB",
                     "DepartureTime": "02:50",
-                    "Duration": "14 0m",
+                    "Duration": "14h 0m",
                     "ArrivalAirportCode": "JFK",
                     "ArrivalTime": "08:50",
                     "FlightNo": "EK203",
@@ -471,7 +471,7 @@
                 {
                     "DepartureAirportCode": "DXB",
                     "DepartureTime": "08:30",
-                    "Duration": "13 45m",
+                    "Duration": "13h 45m",
                     "ArrivalAirportCode": "JFK",
                     "ArrivalTime": "14:15",
                     "FlightNo": "EK201",
@@ -526,7 +526,7 @@
                 {
                     "DepartureAirportCode": "DXB",
                     "DepartureTime": "08:30",
-                    "Duration": "13 45m",
+                    "Duration": "13h 45m",
                     "ArrivalAirportCode": "JFK",
                     "ArrivalTime": "14:15",
                     "FlightNo": "EK201",
@@ -581,7 +581,7 @@
                 {
                     "DepartureAirportCode": "DXB",
                     "DepartureTime": "14:20",
-                    "Duration": "04 35m",
+                    "Duration": "04h 35m",
                     "ArrivalAirportCode": "IST",
                     "ArrivalTime": "17:55",
                     "FlightNo": "EK121",
@@ -596,7 +596,7 @@
                 {
                     "DepartureAirportCode": "IST",
                     "DepartureTime": "19:25",
-                    "Duration": "14 35m",
+                    "Duration": "14h 35m",
                     "ArrivalAirportCode": "IST",
                     "ArrivalTime": "08:50",
                     "FlightNo": "EK121",

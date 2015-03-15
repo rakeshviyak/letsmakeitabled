@@ -22,7 +22,7 @@
     <option value="0">None</option>
 
     <option value="1">Emirates First class Lounge (+$200)</option>
-    <option value="2">Emirates First class Lounge(+$50)</option>
+    <option value="2">Emirates Business class Lounge(+$50)</option>
     </select></p>
 	  	<p>Add a movie (+$10)&nbsp;&nbsp;<input type="checkbox"></p>
 	  	<p>Add a PS4 gaming station(+$10)&nbsp;&nbsp;<input type="checkbox"></p>
