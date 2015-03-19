@@ -5,8 +5,7 @@
 <div ng-app="App">
     <div ng-controller="MainCtrl">
         <div class="container" style="margin-top: 80px;">
-
-            <div class="row">
+            <div class="row col-md-6 col-md-offset-3">
                 <div class="col-xs-5" style="font-weight:bold;"> {{RecordsCount.length}} results</div>
                 <div type="submit" class="btn btn-default col-xs-3" style="margin-right:10px;" data-toggle="modal" data-target="#myModal">Filter</div>
                 <div class="dropdown ">
@@ -21,9 +20,9 @@
                 </div>
             </div>
 
-            <div class="container" style="background:rgb(242, 242, 242);margin-top: 15px;">
+            <div class="container col-md-6 col-md-offset-3" style="background:rgb(242, 242, 242);margin-top: 15px;">
                 <div class="row" style="padding:0px 15px 15px 15px;">
-                    <div class="col-sm-6 portfolio-item e-education" style="padding-right:0px;padding-left:0px">
+                    <div class="portfolio-item e-education" style="padding-right:0px;padding-left:0px">
                         <div ng-repeat="record in RecordsCount = ( records | orderBy:SortBy:ReverseSort | filter: searchFiltered)">
                             <div class="row" style="margin-top:10px;padding-bottom:10px;border-bottom:1px solid #CECCCC;
                             padding-right:15px;padding-left:15px">
@@ -116,508 +115,503 @@
 		            </div>
 		        </div>
 		    </div>
-
-
     </div>
 </div>
 
+<script type="text/javascript">
+
+    var app = angular.module('App', ['checklist-model', 'angular.filter']);
+
+    app.controller('MainCtrl', ['$scope', function ($scope) {
+
+        $scope.SortBy = "disabledFriendly"
+        $scope.ReverseSort = false;
+        $scope.IsChair = false;
+        $scope.MaxDuration = 0
+        $scope.MinLayover = 0;
+        $scope.flightRecord = null;
 
 
+        //$scope.RecordsCount = 0;
 
-    <script type="text/javascript">
+        $scope.changeSort = function (sort) {
 
-        var app = angular.module('App', ['checklist-model', 'angular.filter']);
-
-        app.controller('MainCtrl', ['$scope', function ($scope) {
-
-            $scope.SortBy = "disabledFriendly"
-            $scope.ReverseSort = false;
-            $scope.IsChair = false;
-            $scope.MaxDuration = 0
-            $scope.MinLayover = 0;
-            $scope.flightRecord = null;
-
-
-            //$scope.RecordsCount = 0;
-
-            $scope.changeSort = function (sort) {
-
-                if ($scope.SortBy === sort)
-                {
-                    if ($scope.ReverseSort === true) {
-                        $scope.ReverseSort = false;
-                    }
-                    else
-                    {
-                        $scope.ReverseSort = true;
-                    }
-                }
-                else
-                {
-
-                    $scope.SortBy = sort;
+            if ($scope.SortBy === sort)
+            {
+                if ($scope.ReverseSort === true) {
                     $scope.ReverseSort = false;
                 }
-            };
-
-            $scope.checkChair = function (isChair) {
-
-                if (isChair.toString() === $scope.IsChair.toString())
-                {
-                    return true;
-                }
                 else
                 {
-                    return false;
+                    $scope.ReverseSort = true;
                 }
-            };
-            $scope.getRecord = function (record) {
-	            $scope.flightRecord = record;
+            }
+            else
+            {
 
-            };
+                $scope.SortBy = sort;
+                $scope.ReverseSort = false;
+            }
+        };
 
-            $scope.checkMaxDuration = function (duration) {
+        $scope.checkChair = function (isChair) {
 
-                $scope.hIndex = duration.indexOf('h');
-                if (parseInt(duration.substring(0, $scope.hIndex)) <= parseInt($scope.MaxDuration)) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            };
+            if (isChair.toString() === $scope.IsChair.toString())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        };
+        $scope.getRecord = function (record) {
+          $scope.flightRecord = record;
 
-            $scope.checkMinLayover = function (layOver) {
+        };
 
-                $scope.hIndex = layOver.indexOf('h');
-                if (parseInt(layOver.substring(0, $scope.hIndex)) <= parseInt($scope.MinLayover)) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            };
+        $scope.checkMaxDuration = function (duration) {
 
-            $scope.searchFiltered = function (row) {
+            $scope.hIndex = duration.indexOf('h');
+            if (parseInt(duration.substring(0, $scope.hIndex)) <= parseInt($scope.MaxDuration)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        };
 
-                if (($scope.IsChair == false || $scope.checkChair(row.WeelChair)) &&
-                    ($scope.MaxDuration == 0 || $scope.checkMaxDuration(row.Legs[0].Duration)) &&
-                    ($scope.MaxDuration == 0 || $scope.checkMaxDuration(row.Legs[1].Duration)) &&
-                    ($scope.MinLayover == 0 || $scope.checkMinLayover(row.LayOver))
-                 )
-                {
-                    return true;
-                }
-            };
+        $scope.checkMinLayover = function (layOver) {
 
-            $scope.records = [
-              {
-                  "_id": 1,
-                  "FarePrice": 1020.00,
-                  "TotalTax": 110.00,
-                  "TotalFare": 1120.00,
-                  "DepartureAirport": "Changi International",
-                  "DepartureAirportCode": "SIN",
-                  "DepartureTime": "10:35",
-                  "DepartureDate": "15-04-2015",
-                  "Duration": "22h 50m",
-                  "ArrivalAirport": "John F Kennedy International Airport",
-                  "ArrivalAirportCode": "JFK",
-                  "ArrivalDate": "15-04-2015",
-                  "ArrivalTime": "20:45",
-                  "Stops": 1,
-                  "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
-                  "WeelChair": "false",
-                  "disabledFriendly": 2,
-                  "Currency": "SGD",
-                  "FlightType": "Departure",
-                  "LayOver": "1h 20m",
-                  "Legs": [
-                      {
-                          "DepartureAirportCode": "SIN",
-                          "DepartureTime": "10:35",
-                          "Duration": "7h 20m",
-                          "ArrivalAirportCode": "DXB",
-                          "ArrivalTime": "13:40",
-                          "FlightNo": "EK433",
-                          "DepartureDate": "15-04-2015",
-                          "ArrivalDate": "15-04-2015",
-                          "DepartureAirport": "SIN",
-                          "ArrivalAirport": "DXB",
-                          "WeelChair": "false",
-                          "disabledFriendly": 2,
-                          "FlightModel": "Boeing 777-300ER"
-                      },
-                      {
-                          "DepartureAirportCode": "DXB",
-                          "DepartureTime": "15:00",
-                          "Duration": "7h 20m",
-                          "ArrivalAirportCode": "JFK",
-                          "ArrivalTime": "20:45",
-                          "FlightNo": "EK207",
-                          "DepartureDate": "15-04-2015",
-                          "ArrivalDate": "15-04-2015",
-                          "DepartureAirport": "Dubai",
-                          "ArrivalAirport": "John F Kennedy International Airport",
-                          "LayOver": "1h 20m",
-                          "disabledFriendly": 2,
-                          "FlightModel": "Airbus A380-800"
-                      }
-                  ]
-              },
+            $scope.hIndex = layOver.indexOf('h');
+            if (parseInt(layOver.substring(0, $scope.hIndex)) <= parseInt($scope.MinLayover)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        };
 
-        {
-            "_id": 2,
-            "FarePrice": 1130.00,
-            "TotalTax": 130.70,
-            "TotalFare": 1260.70,
-            "DepartureAirport": "Changi International",
-            "DepartureAirportCode": "SIN",
-            "DepartureTime": "09:40",
-            "DepartureDate": "15-04-2015",
-            "Duration": "23h 5m",
-            "ArrivalAirport": "John F Kennedy International Airport",
-            "ArrivalAirportCode": "JFK",
-            "ArrivalDate": "15-04-2015",
-            "ArrivalTime": "20:45",
-            "Stops": 1,
-            "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
-            "WeelChair": "true",
-            "disabledFriendly": 1,
-            "Currency": "SGD",
-            "FlightType": "Departure",
-            "LayOver": "1h 20m",
-            "Legs": [
-                {
-                    "DepartureAirportCode": "SIN",
-                    "DepartureTime": "09:40",
-                    "Duration": "7h 15m",
-                    "ArrivalAirportCode": "DXB",
-                    "ArrivalTime": "12:55",
-                    "FlightNo": "EK433",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "15-04-2015",
-                    "DepartureAirport": "SIN",
-                    "ArrivalAirport": "DXB",
-                    "WeelChair": "true",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Boeing 777-300ER"
-                },
-                {
-                    "DepartureAirportCode": "DXB",
-                    "DepartureTime": "15:00",
-                    "Duration": "7h 20m",
-                    "ArrivalAirportCode": "JFK",
-                    "ArrivalTime": "20:45",
-                    "FlightNo": "EK207",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "15-04-2015",
-                    "DepartureAirport": "Dubai",
-                    "ArrivalAirport": "John F Kennedy International Airport",
-                    "LayOver": "1h 20m",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Airbus A380-800"
-                }
-            ]
-        },
+        $scope.searchFiltered = function (row) {
 
-        {
-            "_id": 3,
-            "FarePrice": 1560.00,
-            "TotalTax": 153.00,
-            "TotalFare": 1713.70,
-            "DepartureAirport": "Changi International",
-            "DepartureAirportCode": "SIN",
-            "DepartureTime": "21:25",
-            "DepartureDate": "15-04-2015",
-            "Duration": "23h 25m",
-            "ArrivalAirport": "John F Kennedy International Airport",
-            "ArrivalAirportCode": "JFK",
-            "ArrivalDate": "16-04-2015",
-            "ArrivalTime": "08:50",
-            "Stops": 1,
-            "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
-            "WeelChair": "false",
-            "disabledFriendly": 1,
-            "LayOver": "3h 40m",
-            "Legs": [
-                {
-                    "DepartureAirportCode": "SIN",
-                    "DepartureTime": "21:25",
-                    "Duration": "7h 30m",
-                    "ArrivalAirportCode": "DXB",
-                    "ArrivalTime": "00:55",
-                    "FlightNo": "EK433",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "16-04-2015",
-                    "DepartureAirport": "SIN",
-                    "ArrivalAirport": "DXB",
-                    "WeelChair": "false",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Boeing 777-300ER"
-                },
-                {
-                    "DepartureAirportCode": "DXB",
-                    "DepartureTime": "02:50",
-                    "Duration": "14h 0m",
-                    "ArrivalAirportCode": "JFK",
-                    "ArrivalTime": "08:50",
-                    "FlightNo": "EK203",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "16-04-2015",
-                    "DepartureAirport": "Dubai",
-                    "ArrivalAirport": "John F Kennedy International Airport",
-                    "LayOver": "1h 55m",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Airbus A380-800"
-                }
-            ],
-            "Currency": "SGD",
-            "FlightType": "Departure"
-        },
+            if (($scope.IsChair == false || $scope.checkChair(row.WeelChair)) &&
+                ($scope.MaxDuration == 0 || $scope.checkMaxDuration(row.Legs[0].Duration)) &&
+                ($scope.MaxDuration == 0 || $scope.checkMaxDuration(row.Legs[1].Duration)) &&
+                ($scope.MinLayover == 0 || $scope.checkMinLayover(row.LayOver))
+             )
+            {
+                return true;
+            }
+        };
 
-        {
-            "_id": 4,
-            "FarePrice": 1560.00,
-            "TotalTax": 153.70,
-            "TotalFare": 1713.70,
-            "DepartureAirport": "Changi International",
-            "DepartureAirportCode": "SIN",
-            "DepartureTime": "21:25",
-            "DepartureDate": "15-04-2015",
-            "Duration": "23h 25m",
-            "ArrivalAirport": "John F Kennedy International Airport",
-            "ArrivalAirportCode": "JFK",
-            "ArrivalDate": "16-04-2015",
-            "ArrivalTime": "08:50",
-            "Stops": 1,
-            "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
-            "WeelChair": "true",
-            "disabledFriendly": 1,
-            "Currency": "SGD",
-            "FlightType": "Departure",
-            "LayOver": "3h 40m",
-            "Legs": [
-                {
-                    "DepartureAirportCode": "SIN",
-                    "DepartureTime": "21:25",
-                    "Duration": "7h 30m",
-                    "ArrivalAirportCode": "DXB",
-                    "ArrivalTime": "00:55",
-                    "FlightNo": "EK355",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "16-04-2015",
-                    "DepartureAirport": "SIN",
-                    "ArrivalAirport": "DXB",
-                    "WeelChair": "true",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Boeing 777-300ER"
-                },
-                {
-                    "DepartureAirportCode": "DXB",
-                    "DepartureTime": "02:50",
-                    "Duration": "14h 0m",
-                    "ArrivalAirportCode": "JFK",
-                    "ArrivalTime": "08:50",
-                    "FlightNo": "EK203",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "16-04-2015",
-                    "DepartureAirport": "Dubai",
-                    "ArrivalAirport": "John F Kennedy International Airport",
-                    "LayOver": "1h 55m",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Airbus A380-800"
-                }
-            ]
-        },
+        $scope.records = [
+          {
+              "_id": 1,
+              "FarePrice": 1020.00,
+              "TotalTax": 110.00,
+              "TotalFare": 1120.00,
+              "DepartureAirport": "Changi International",
+              "DepartureAirportCode": "SIN",
+              "DepartureTime": "10:35",
+              "DepartureDate": "15-04-2015",
+              "Duration": "22h 50m",
+              "ArrivalAirport": "John F Kennedy International Airport",
+              "ArrivalAirportCode": "JFK",
+              "ArrivalDate": "15-04-2015",
+              "ArrivalTime": "20:45",
+              "Stops": 1,
+              "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
+              "WeelChair": "false",
+              "disabledFriendly": 2,
+              "Currency": "SGD",
+              "FlightType": "Departure",
+              "LayOver": "1h 20m",
+              "Legs": [
+                  {
+                      "DepartureAirportCode": "SIN",
+                      "DepartureTime": "10:35",
+                      "Duration": "7h 20m",
+                      "ArrivalAirportCode": "DXB",
+                      "ArrivalTime": "13:40",
+                      "FlightNo": "EK433",
+                      "DepartureDate": "15-04-2015",
+                      "ArrivalDate": "15-04-2015",
+                      "DepartureAirport": "SIN",
+                      "ArrivalAirport": "DXB",
+                      "WeelChair": "false",
+                      "disabledFriendly": 2,
+                      "FlightModel": "Boeing 777-300ER"
+                  },
+                  {
+                      "DepartureAirportCode": "DXB",
+                      "DepartureTime": "15:00",
+                      "Duration": "7h 20m",
+                      "ArrivalAirportCode": "JFK",
+                      "ArrivalTime": "20:45",
+                      "FlightNo": "EK207",
+                      "DepartureDate": "15-04-2015",
+                      "ArrivalDate": "15-04-2015",
+                      "DepartureAirport": "Dubai",
+                      "ArrivalAirport": "John F Kennedy International Airport",
+                      "LayOver": "1h 20m",
+                      "disabledFriendly": 2,
+                      "FlightModel": "Airbus A380-800"
+                  }
+              ]
+          },
 
-        {
-            "_id": 5,
-            "FarePrice": 1660.00,
-            "TotalTax": 155.80,
-            "TotalFare": 1815.80,
-            "DepartureAirport": "Changi International",
-            "DepartureAirportCode": "SIN",
-            "DepartureTime": "01:40",
-            "DepartureDate": "15-04-2015",
-            "Duration": "24h 35m",
-            "ArrivalAirport": "John F Kennedy International Airport",
-            "ArrivalAirportCode": "JFK",
-            "ArrivalDate": "15-04-2015",
-            "ArrivalTime": "14:15",
-            "Stops": 1,
-            "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
-            "WeelChair": "true",
-            "disabledFriendly": 1,
-            "Currency": "SGD",
-            "FlightType": "Departure",
-            "LayOver": "3h 40m",
-            "Legs": [
-                {
-                    "DepartureAirportCode": "SIN",
-                    "DepartureTime": "01:40",
-                    "Duration": "7h 10m",
-                    "ArrivalAirportCode": "DXB",
-                    "ArrivalTime": "04:50",
-                    "FlightNo": "EK405",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "15-04-2015",
-                    "DepartureAirport": "SIN",
-                    "ArrivalAirport": "DXB",
-                    "WeelChair": "true",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Boeing 777-300ER"
-                },
-                {
-                    "DepartureAirportCode": "DXB",
-                    "DepartureTime": "08:30",
-                    "Duration": "13h 45m",
-                    "ArrivalAirportCode": "JFK",
-                    "ArrivalTime": "14:15",
-                    "FlightNo": "EK201",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "15-04-2015",
-                    "DepartureAirport": "Dubai",
-                    "ArrivalAirport": "John F Kennedy International Airport",
-                    "LayOver": "3h 40m",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Airbus A380-800"
-                }
-            ]
-        },
+    {
+        "_id": 2,
+        "FarePrice": 1130.00,
+        "TotalTax": 130.70,
+        "TotalFare": 1260.70,
+        "DepartureAirport": "Changi International",
+        "DepartureAirportCode": "SIN",
+        "DepartureTime": "09:40",
+        "DepartureDate": "15-04-2015",
+        "Duration": "23h 5m",
+        "ArrivalAirport": "John F Kennedy International Airport",
+        "ArrivalAirportCode": "JFK",
+        "ArrivalDate": "15-04-2015",
+        "ArrivalTime": "20:45",
+        "Stops": 1,
+        "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
+        "WeelChair": "true",
+        "disabledFriendly": 1,
+        "Currency": "SGD",
+        "FlightType": "Departure",
+        "LayOver": "1h 20m",
+        "Legs": [
+            {
+                "DepartureAirportCode": "SIN",
+                "DepartureTime": "09:40",
+                "Duration": "7h 15m",
+                "ArrivalAirportCode": "DXB",
+                "ArrivalTime": "12:55",
+                "FlightNo": "EK433",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "15-04-2015",
+                "DepartureAirport": "SIN",
+                "ArrivalAirport": "DXB",
+                "WeelChair": "true",
+                "disabledFriendly": 1,
+                "FlightModel": "Boeing 777-300ER"
+            },
+            {
+                "DepartureAirportCode": "DXB",
+                "DepartureTime": "15:00",
+                "Duration": "7h 20m",
+                "ArrivalAirportCode": "JFK",
+                "ArrivalTime": "20:45",
+                "FlightNo": "EK207",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "15-04-2015",
+                "DepartureAirport": "Dubai",
+                "ArrivalAirport": "John F Kennedy International Airport",
+                "LayOver": "1h 20m",
+                "disabledFriendly": 1,
+                "FlightModel": "Airbus A380-800"
+            }
+        ]
+    },
 
-        {
-            "_id": 5,
-            "FarePrice": 1660.00,
-            "TotalTax": 155.80,
-            "TotalFare": 1815.80,
-            "DepartureAirport": "Changi International",
-            "DepartureAirportCode": "SIN",
-            "DepartureTime": "01:40",
-            "DepartureDate": "15-04-2015",
-            "Duration": "24h 35m",
-            "ArrivalAirport": "John F Kennedy International Airport",
-            "ArrivalAirportCode": "JFK",
-            "ArrivalDate": "15-04-2015",
-            "ArrivalTime": "14:15",
-            "Stops": 1,
-            "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
-            "WeelChair": "true",
-            "disabledFriendly": 1,
-            "Currency": "SGD",
-            "FlightType": "Departure",
-            "LayOver": "3h 40m",
-            "Legs": [
-                {
-                    "DepartureAirportCode": "SIN",
-                    "DepartureTime": "01:40",
-                    "Duration": "7h 10m",
-                    "ArrivalAirportCode": "DXB",
-                    "ArrivalTime": "04:50",
-                    "FlightNo": "EK405",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "15-04-2015",
-                    "DepartureAirport": "SIN",
-                    "ArrivalAirport": "DXB",
-                    "WeelChair": "true",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Boeing 777-300ER"
-                },
-                {
-                    "DepartureAirportCode": "DXB",
-                    "DepartureTime": "08:30",
-                    "Duration": "13h 45m",
-                    "ArrivalAirportCode": "JFK",
-                    "ArrivalTime": "14:15",
-                    "FlightNo": "EK201",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "15-04-2015",
-                    "DepartureAirport": "Dubai",
-                    "ArrivalAirport": "John F Kennedy International Airport",
-                    "LayOver": "3h 40m",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Airbus A380-800"
-                }
-            ]
-        },
+    {
+        "_id": 3,
+        "FarePrice": 1560.00,
+        "TotalTax": 153.00,
+        "TotalFare": 1713.70,
+        "DepartureAirport": "Changi International",
+        "DepartureAirportCode": "SIN",
+        "DepartureTime": "21:25",
+        "DepartureDate": "15-04-2015",
+        "Duration": "23h 25m",
+        "ArrivalAirport": "John F Kennedy International Airport",
+        "ArrivalAirportCode": "JFK",
+        "ArrivalDate": "16-04-2015",
+        "ArrivalTime": "08:50",
+        "Stops": 1,
+        "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
+        "WeelChair": "false",
+        "disabledFriendly": 1,
+        "LayOver": "3h 40m",
+        "Legs": [
+            {
+                "DepartureAirportCode": "SIN",
+                "DepartureTime": "21:25",
+                "Duration": "7h 30m",
+                "ArrivalAirportCode": "DXB",
+                "ArrivalTime": "00:55",
+                "FlightNo": "EK433",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "16-04-2015",
+                "DepartureAirport": "SIN",
+                "ArrivalAirport": "DXB",
+                "WeelChair": "false",
+                "disabledFriendly": 1,
+                "FlightModel": "Boeing 777-300ER"
+            },
+            {
+                "DepartureAirportCode": "DXB",
+                "DepartureTime": "02:50",
+                "Duration": "14h 0m",
+                "ArrivalAirportCode": "JFK",
+                "ArrivalTime": "08:50",
+                "FlightNo": "EK203",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "16-04-2015",
+                "DepartureAirport": "Dubai",
+                "ArrivalAirport": "John F Kennedy International Airport",
+                "LayOver": "1h 55m",
+                "disabledFriendly": 1,
+                "FlightModel": "Airbus A380-800"
+            }
+        ],
+        "Currency": "SGD",
+        "FlightType": "Departure"
+    },
 
-        {
-            "_id": 6,
-            "FarePrice": 1800.00,
-            "TotalTax": 155.80,
-            "TotalFare": 1955.80,
-            "DepartureAirport": "Changi International",
-            "DepartureAirportCode": "SIN",
-            "DepartureTime": "01:40",
-            "DepartureDate": "15-04-2015",
-            "Duration": "34h 45m",
-            "ArrivalAirport": "John F Kennedy International Airport",
-            "ArrivalAirportCode": "JFK",
-            "ArrivalDate": "16-04-2015",
-            "ArrivalTime": "08:50",
-            "Stops": 2,
-            "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
-            "WeelChair": "true",
-            "disabledFriendly": 1,
-            "Currency": "SGD",
-            "FlightType": "Departure",
-            "LayOver": "2h 55m",
-            "Legs": [
-                {
-                    "DepartureAirportCode": "SIN",
-                    "DepartureTime": "09:40",
-                    "Duration": "7h 15m",
-                    "ArrivalAirportCode": "DXB",
-                    "ArrivalTime": "12:55",
-                    "FlightNo": "EK433",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "15-04-2015",
-                    "DepartureAirport": "SIN",
-                    "ArrivalAirport": "DXB",
-                    "WeelChair": "true",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Boeing 777-300ER"
-                },
-                {
-                    "DepartureAirportCode": "DXB",
-                    "DepartureTime": "14:20",
-                    "Duration": "04h 35m",
-                    "ArrivalAirportCode": "IST",
-                    "ArrivalTime": "17:55",
-                    "FlightNo": "EK121",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "15-04-2015",
-                    "DepartureAirport": "Dubai",
-                    "ArrivalAirport": "Istanpul-IST",
-                    "LayOver": "1h 25m",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Airbus A380-800"
-                },
-                {
-                    "DepartureAirportCode": "IST",
-                    "DepartureTime": "19:25",
-                    "Duration": "14h 35m",
-                    "ArrivalAirportCode": "IST",
-                    "ArrivalTime": "08:50",
-                    "FlightNo": "EK121",
-                    "DepartureDate": "15-04-2015",
-                    "ArrivalDate": "16-04-2015",
-                    "DepartureAirport": "Dubai",
-                    "ArrivalAirport": "John F kennady Airport- New Yark",
-                    "LayOver": "1h 30m",
-                    "disabledFriendly": 1,
-                    "FlightModel": "Airbus A380-800"
-                }
-            ]
-        }
+    {
+        "_id": 4,
+        "FarePrice": 1560.00,
+        "TotalTax": 153.70,
+        "TotalFare": 1713.70,
+        "DepartureAirport": "Changi International",
+        "DepartureAirportCode": "SIN",
+        "DepartureTime": "21:25",
+        "DepartureDate": "15-04-2015",
+        "Duration": "23h 25m",
+        "ArrivalAirport": "John F Kennedy International Airport",
+        "ArrivalAirportCode": "JFK",
+        "ArrivalDate": "16-04-2015",
+        "ArrivalTime": "08:50",
+        "Stops": 1,
+        "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
+        "WeelChair": "true",
+        "disabledFriendly": 1,
+        "Currency": "SGD",
+        "FlightType": "Departure",
+        "LayOver": "3h 40m",
+        "Legs": [
+            {
+                "DepartureAirportCode": "SIN",
+                "DepartureTime": "21:25",
+                "Duration": "7h 30m",
+                "ArrivalAirportCode": "DXB",
+                "ArrivalTime": "00:55",
+                "FlightNo": "EK355",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "16-04-2015",
+                "DepartureAirport": "SIN",
+                "ArrivalAirport": "DXB",
+                "WeelChair": "true",
+                "disabledFriendly": 1,
+                "FlightModel": "Boeing 777-300ER"
+            },
+            {
+                "DepartureAirportCode": "DXB",
+                "DepartureTime": "02:50",
+                "Duration": "14h 0m",
+                "ArrivalAirportCode": "JFK",
+                "ArrivalTime": "08:50",
+                "FlightNo": "EK203",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "16-04-2015",
+                "DepartureAirport": "Dubai",
+                "ArrivalAirport": "John F Kennedy International Airport",
+                "LayOver": "1h 55m",
+                "disabledFriendly": 1,
+                "FlightModel": "Airbus A380-800"
+            }
+        ]
+    },
 
-         ];
+    {
+        "_id": 5,
+        "FarePrice": 1660.00,
+        "TotalTax": 155.80,
+        "TotalFare": 1815.80,
+        "DepartureAirport": "Changi International",
+        "DepartureAirportCode": "SIN",
+        "DepartureTime": "01:40",
+        "DepartureDate": "15-04-2015",
+        "Duration": "24h 35m",
+        "ArrivalAirport": "John F Kennedy International Airport",
+        "ArrivalAirportCode": "JFK",
+        "ArrivalDate": "15-04-2015",
+        "ArrivalTime": "14:15",
+        "Stops": 1,
+        "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
+        "WeelChair": "true",
+        "disabledFriendly": 1,
+        "Currency": "SGD",
+        "FlightType": "Departure",
+        "LayOver": "3h 40m",
+        "Legs": [
+            {
+                "DepartureAirportCode": "SIN",
+                "DepartureTime": "01:40",
+                "Duration": "7h 10m",
+                "ArrivalAirportCode": "DXB",
+                "ArrivalTime": "04:50",
+                "FlightNo": "EK405",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "15-04-2015",
+                "DepartureAirport": "SIN",
+                "ArrivalAirport": "DXB",
+                "WeelChair": "true",
+                "disabledFriendly": 1,
+                "FlightModel": "Boeing 777-300ER"
+            },
+            {
+                "DepartureAirportCode": "DXB",
+                "DepartureTime": "08:30",
+                "Duration": "13h 45m",
+                "ArrivalAirportCode": "JFK",
+                "ArrivalTime": "14:15",
+                "FlightNo": "EK201",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "15-04-2015",
+                "DepartureAirport": "Dubai",
+                "ArrivalAirport": "John F Kennedy International Airport",
+                "LayOver": "3h 40m",
+                "disabledFriendly": 1,
+                "FlightModel": "Airbus A380-800"
+            }
+        ]
+    },
 
-            
+    {
+        "_id": 5,
+        "FarePrice": 1660.00,
+        "TotalTax": 155.80,
+        "TotalFare": 1815.80,
+        "DepartureAirport": "Changi International",
+        "DepartureAirportCode": "SIN",
+        "DepartureTime": "01:40",
+        "DepartureDate": "15-04-2015",
+        "Duration": "24h 35m",
+        "ArrivalAirport": "John F Kennedy International Airport",
+        "ArrivalAirportCode": "JFK",
+        "ArrivalDate": "15-04-2015",
+        "ArrivalTime": "14:15",
+        "Stops": 1,
+        "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
+        "WeelChair": "true",
+        "disabledFriendly": 1,
+        "Currency": "SGD",
+        "FlightType": "Departure",
+        "LayOver": "3h 40m",
+        "Legs": [
+            {
+                "DepartureAirportCode": "SIN",
+                "DepartureTime": "01:40",
+                "Duration": "7h 10m",
+                "ArrivalAirportCode": "DXB",
+                "ArrivalTime": "04:50",
+                "FlightNo": "EK405",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "15-04-2015",
+                "DepartureAirport": "SIN",
+                "ArrivalAirport": "DXB",
+                "WeelChair": "true",
+                "disabledFriendly": 1,
+                "FlightModel": "Boeing 777-300ER"
+            },
+            {
+                "DepartureAirportCode": "DXB",
+                "DepartureTime": "08:30",
+                "Duration": "13h 45m",
+                "ArrivalAirportCode": "JFK",
+                "ArrivalTime": "14:15",
+                "FlightNo": "EK201",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "15-04-2015",
+                "DepartureAirport": "Dubai",
+                "ArrivalAirport": "John F Kennedy International Airport",
+                "LayOver": "3h 40m",
+                "disabledFriendly": 1,
+                "FlightModel": "Airbus A380-800"
+            }
+        ]
+    },
 
-        }]);
+    {
+        "_id": 6,
+        "FarePrice": 1800.00,
+        "TotalTax": 155.80,
+        "TotalFare": 1955.80,
+        "DepartureAirport": "Changi International",
+        "DepartureAirportCode": "SIN",
+        "DepartureTime": "01:40",
+        "DepartureDate": "15-04-2015",
+        "Duration": "34h 45m",
+        "ArrivalAirport": "John F Kennedy International Airport",
+        "ArrivalAirportCode": "JFK",
+        "ArrivalDate": "16-04-2015",
+        "ArrivalTime": "08:50",
+        "Stops": 2,
+        "SellKey": "8d22d5ea-06ac-42d6-b15d-0b08c33bbfb7",
+        "WeelChair": "true",
+        "disabledFriendly": 1,
+        "Currency": "SGD",
+        "FlightType": "Departure",
+        "LayOver": "2h 55m",
+        "Legs": [
+            {
+                "DepartureAirportCode": "SIN",
+                "DepartureTime": "09:40",
+                "Duration": "7h 15m",
+                "ArrivalAirportCode": "DXB",
+                "ArrivalTime": "12:55",
+                "FlightNo": "EK433",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "15-04-2015",
+                "DepartureAirport": "SIN",
+                "ArrivalAirport": "DXB",
+                "WeelChair": "true",
+                "disabledFriendly": 1,
+                "FlightModel": "Boeing 777-300ER"
+            },
+            {
+                "DepartureAirportCode": "DXB",
+                "DepartureTime": "14:20",
+                "Duration": "04h 35m",
+                "ArrivalAirportCode": "IST",
+                "ArrivalTime": "17:55",
+                "FlightNo": "EK121",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "15-04-2015",
+                "DepartureAirport": "Dubai",
+                "ArrivalAirport": "Istanpul-IST",
+                "LayOver": "1h 25m",
+                "disabledFriendly": 1,
+                "FlightModel": "Airbus A380-800"
+            },
+            {
+                "DepartureAirportCode": "IST",
+                "DepartureTime": "19:25",
+                "Duration": "14h 35m",
+                "ArrivalAirportCode": "IST",
+                "ArrivalTime": "08:50",
+                "FlightNo": "EK121",
+                "DepartureDate": "15-04-2015",
+                "ArrivalDate": "16-04-2015",
+                "DepartureAirport": "Dubai",
+                "ArrivalAirport": "John F kennady Airport- New Yark",
+                "LayOver": "1h 30m",
+                "disabledFriendly": 1,
+                "FlightModel": "Airbus A380-800"
+            }
+        ]
+    }
 
-    </script>
+     ];
+
+        
+
+    }]);
+
+</script>
 
 
 <?php include_once("base_bottom.html"); ?>

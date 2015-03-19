@@ -1,88 +1,90 @@
 <?php include_once("base_top.html"); ?>
 
-<div id="#top"></div>
-<section id="home">
+<section id="home" ng-app="index" ng-controller="IndexCtrl">
   <div class="banner-container"> <img src="images/banner.jpg" alt="banner" />
-    <div class="container banner-content">
-      <div class="hero-text animated fadeInDownBig">
-        <!-- <h1 class="responsive-headline" style="font-size: 40px;">Are you special, Lets make your travel awesome <i class="fa fa-smile-o"></i></h1> -->
-         <!-- <a href="#basics" class="arrow-link"> <i class="fa fa-chevron-down"></i> </a>  -->
-        <!--<p>Awesome theme for your Business or Corporate site to showcase <br/>
-          your product and service.</p>--> 
-      </div>
-      
-      <!-- <a class="hero-button learn-more smoothscroll text-center" href="#features">Learn More</a>--> 
-      <!-- <div class="hero-img"> <img src="images/homepage-1204-background-lapto.png" alt="" class="text-center animated fadeInUpBig"/></div>--> 
-    </div>
   </div>
   <div class="container">
   <h3 class="col-md-offset-3">Are you special, Lets make your travel awesome </h3>
   <form class="">
-  <div class="btn-group  col-md-offset-4 col-xs-offset-4" role="group" aria-label="..." style="padding-left:75px;">
-    <button type="button" class="btn btn-default btn-col-md-6" autofocus="true" id="roundtrip">Round-trip</button>
-    <button type="button" class="btn btn-default btn-col-md-6" id="oneway">One-way </button>
-  </div>
-      <!-- <div class="row form-group">
-        <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-primary active">
-                <input type="radio" name="year" id="roundtrip" value="rountrip">Round-trip
-            </label>
-            <label class="btn btn-primary" id="oneway">
-                <input type="radio" name="year" value="oneway">One-way
-            </label>
-        </div>
-      </div> -->
-
-
-    <div class="form-group">
-      <label for="exampleInputName2">From</label>
-      <input type="text" class="form-control" id="exampleInputName2" placeholder="Singapore">
+    <div class="btn-group  col-md-offset-4 col-xs-offset-4" role="group" aria-label="..." style="padding-left:75px;">
+      <button type="button" class="btn btn-default btn-col-md-6" autofocus="true" id="roundtrip">Round-trip</button>
+      <button type="button" class="btn btn-default btn-col-md-6" id="oneway">One-way </button>
     </div>
     <div class="form-group">
-      <label for="exampleInputName2">To</label>
-      <input type="text" class="form-control" id="exampleInputName2" placeholder="Newyork">
+      <label for="exampleInputName2">From: {{fromCity.value}}</label>
+      <select name="for" ng-model="fromCity"
+                ng-options="from as from.displayName for from in fromCities" class="col-xs-12">
+      </select>
+
+    </div>
+    <div class="form-group">
+      <label for="exampleInputName2">To: {{returnCity.value}}</label>
+      <select name="return" ng-model="returnCity"
+            ng-options="return as return.displayName for return in returnCities" class="col-xs-12">
+        <!-- <option ng-repeat="return in returnCities" value="{{return.value}}">{{return.displayName}}</option> -->
+      </select>
     </div>
     <div class="form-group">
       <label for="exampleInputName2">Depart</label>
-      <input type="Date" class="form-control" id="exampleInputName2" placeholder="Depart" >
+      <input type="date" class="form-control" ng-model="departDate.value" placeholder="yyyy-MM-dd" >
+      <!-- <input type="date" id="exampleInput" name="input" ng-model="example.value"
+       placeholder="yyyy-MM-dd"/> {{example.value}} -->
     </div>
     <div class="form-group onewaytext">
       <label for="exampleInputName2">Return</label>
-      <input type="date" class="form-control" id="exampleInputName2" placeholder="Return">
+      <input type="date" class="form-control" ng-model="returnDate.value" placeholder="yyyy-MM-dd" >
     </div>
-    <div style="margin-left:40px;margin-bottom: 20px;">
-    <span>Seniors</span><select name="Seniors">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    </select>
-    <span>Chilren</span><select name="Childer">
-    <option value="0">0</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    </select>
-    <span>Adults</span><select name="Adults">
-    <option value="0">0</option>
-
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    </select>
+    <div class="form-group">
+      <span>Seniors</span>
+      <select name="Seniors">
+        <option ng-repeat="n in [1,2,3,4,5]" value="{{n}}">{{n}}</option>
+      </select>
+      <span>Children</span>
+      <select name="Childer">
+        <option ng-repeat="n in [1,2,3,4,5]" value="{{n}}">{{n}}</option>
+      </select>
+      <span>Adults</span>
+      <select name="Adults">
+        <option ng-repeat="n in [1,2,3,4,5]" value="{{n}}">{{n}}</option>
+      </select>
     </div>
-    <div type="submit" class="btn btn-default btn-block" style="margin-bottom: 30px;"><a href="flights.php" style="color:inherit;">Find Flights </div>
-
+    <div class="form-group" style="margin-bottom: 30px;"> 
+        <button class="btn btn-block btn-primary"><a href="flights.php?from={{fromCity.value}}&return={{returnCity.value}}&depart={{departDate.value | date:'yyyy-MM-dd'}}" style="color:inherit;">Find Flights </a></button> 
+    </div>  
   </form>
-
   </div>
   
 </section>
 
+<script type="text/javascript">
+var app = angular.module('index',[]);
+app.controller('IndexCtrl',['$scope',function($scope){
+    $scope.fromCities = [
+        {value: 'SIN', displayName: 'Singapore'},
+        {value: 'JFK', displayName: 'New York'},
+        {value: 'DBX', displayName: 'Dubai'},
+        {value: 'LHR', displayName: 'London'}
+     ]
+    $scope.returnCities = [
+        {value: 'JFK', displayName: 'New York'},
+        {value: 'DBX', displayName: 'Dubai'},
+        {value: 'LHR', displayName: 'London'},
+        {value: 'SIN', displayName: 'Singapore'}
+     ]
+     $scope.fromCity = $scope.fromCities[0];
+     $scope.returnCity = $scope.returnCities[0];
 
+     var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+     var day = currentDate.getDate()
+     var month = currentDate.getMonth() 
+     var year = currentDate.getFullYear()
+     $scope.departDate = {
+         value: new Date(year, month, day+2)
+       };
+     $scope.returnDate = {
+         value: new Date(year, month, day+9)
+       };
+  }]);
+
+</script>
 <?php include_once("base_bottom.html"); ?>

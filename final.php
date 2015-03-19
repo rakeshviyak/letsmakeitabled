@@ -31,8 +31,9 @@
       <label for="exampleInputName2">CVV</label>
       <input type="text" class="form-control" id="exampleInputName2" placeholder="">
     </div>
-        
-		<div type="button" class="btn btn-default col-xs-12" data-toggle="modal" data-target="#byeModal">Confirm Booking</div>
+     <div class="form-group"> 
+        <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#byeModal">Confirm Booking </button> 
+    </div>   
 
   </div>
 
