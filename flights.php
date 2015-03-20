@@ -122,7 +122,7 @@
 
     var app = angular.module('App', ['checklist-model', 'angular.filter']);
 
-    app.controller('MainCtrl', ['$scope', function ($scope) {
+    app.controller('MainCtrl', ['$scope','$http', function ($scope,$http) {
 
         $scope.SortBy = "disabledFriendly"
         $scope.ReverseSort = false;
@@ -131,7 +131,34 @@
         $scope.MinLayover = 0;
         $scope.flightRecord = null;
 
+        // $http.get(originplace=&=&=&=1').success(function(data) {
+        //     alert(data);
+        // });
+        $http({
+            method: 'POST',
+            url: 'http://partners.api.skyscanner.net/apiservices/pricing/v1.0',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded','Accept':'application/json'},
+            data: {
+              apiKey:'ah091626517241820691765775750391',
+              country:'SG',
+              currency:'SGD',
+              locale:'en-GB',
+              originplace:'SIN-sky',
+              destinationplace:'JFK-sky',
+              outbounddate:'2015-03-27',
+              adults:'1'
+            }
+        }).success(function(data, status, headers, config) {
+            console.log( headers() );
+          });
 
+
+        // $http({
+        //     method: 'POST',
+        //     url: 'http://partners.api.skyscanner.net/apiservices/pricing/v1.0',
+        //     data: $.param({apiKey: "ah091626517241820691765775750391"}),
+        //     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        // })
         //$scope.RecordsCount = 0;
 
         $scope.changeSort = function (sort) {
@@ -167,7 +194,6 @@
         };
         $scope.getRecord = function (record) {
           $scope.flightRecord = record;
-
         };
 
         $scope.checkMaxDuration = function (duration) {
@@ -606,8 +632,6 @@
     }
 
      ];
-
-        
 
     }]);
 
