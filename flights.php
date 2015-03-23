@@ -1,52 +1,77 @@
-<?php include_once("base_top.html"); ?>
+<?php 
 
+    // Allow from any origin
+    if (isset($_SERVER['HTTP_ORIGIN'])) {
+        header("Access-Control-Allow-Origin: *");
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Max-Age: 86400');    // cache for 1 day
+    }
+
+    // Access-Control headers are received during OPTIONS requests
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");         
+
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+            header("Access-Control-Allow-Headers: origin, content-type, accept");
+
+        exit(0);
+    }
+
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT");
+header("Access-Control-Allow-Headers: origin, content-type, accept");
+include_once("base_top.html"); ?>
 
    
 <div ng-app="App">
     <div ng-controller="MainCtrl">
-        <div class="container" style="margin-top: 80px;">
-            <div class="row col-md-6 col-md-offset-3">
-                <div class="col-xs-5" style="font-weight:bold;"> {{RecordsCount.length}} results</div>
-                <div type="submit" class="btn btn-default col-xs-3" style="margin-right:10px;" data-toggle="modal" data-target="#myModal">Filter</div>
-                <div class="dropdown ">
-                    <button class="btn btn-default col-xs-3 dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                        Sort
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="changeSort('disabledFriendly')">Recommended</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="changeSort('TotalFare')">Cheapest</a></li>
-                    </ul>
-                </div>
+        <div class="container" style="margin-bottom: 100px;">
+        <div id="content">
+            <div class="col-md-6 col-md-offset-3" >
+              <div class="row" style="margin:20px;">
+                  <div class="col-xs-5" style="font-weight:bold;"> {{RecordsCount.length}} results</div>
+                  <div type="submit" class="btn btn-default col-xs-3" style="margin-right:10px;" data-toggle="modal" data-target="#myModal">Filter</div>
+                  <div class="dropdown ">
+                      <button class="btn btn-default col-xs-3 dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                          Sort
+                          <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                          <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="changeSort('disabledFriendly')">Recommended</a></li>
+                          <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="changeSort('TotalFare')">Cheapest</a></li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="row" style="padding:15px;background:rgb(242, 242, 242);">
+                  <div class="portfolio-item e-education" style="padding-right:0px;padding-left:0px">
+                      <div ng-repeat="record in RecordsCount = ( records | orderBy:SortBy:ReverseSort | filter: searchFiltered)">
+                          <div class="row" style="margin-top:10px;padding-bottom:10px;border-bottom:1px solid #CECCCC;
+                          padding-right:15px;padding-left:15px">
+
+                              <div class="container" style="padding-right:0px;padding-left:0px">
+                                  <div class="col-xs-1" style="padding-right:0px;padding-left:0px"><img src="images/EmiratesFlightLogo.png" class="img-responsive" alt="" style="height:inherit;"></div>
+                                  <div class="col-xs-10" style="font-weight: bold;padding-left:10px;" data-toggle="modal" data-target="#flightdetail" ng-click="getRecord(record)">Emirates</div>
+                              </div>
+                              <div ng-repeat="leg in record.Legs">
+                                  <div class="f-detail">{{leg.DepartureTime}} {{leg.DepartureAirportCode}} &nbsp;&nbsp;<i class="fa fa-paper-plane"></i>&nbsp; {{leg.ArrivalTime}} {{leg.ArrivalAirportCode}}<span style="padding-left: 15px"><i class="fa fa-clock-o"></i>&nbsp;{{leg.Duration}}</span></div>
+                              </div>
+                              <div class="col-xs-8" style="padding-left:0px;">
+                                  <div>{{record.Stops}} Transit<span style="padding-left: 15px"><i class="fa fa-clock-o"></i>&nbsp;{{record.LayOver}}</span></div>
+                                  <div ng-if="record.WeelChair == 'true'">
+                                  	<div font-weight:bold;><i class="fa fa-wheelchair"></i>&nbsp;wheelchair friendly</span></div>
+                                  </div>
+                              </div>
+                              <div type="submit" class="btn btn-default col-xs-4" style="margin-top:7px;" ><a href="Experience.php" style="color:inherit;">${{record.TotalFare}}</a></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
             </div>
-
-            <div class="container col-md-6 col-md-offset-3" style="background:rgb(242, 242, 242);margin-top: 15px;">
-                <div class="row" style="padding:0px 15px 15px 15px;">
-                    <div class="portfolio-item e-education" style="padding-right:0px;padding-left:0px">
-                        <div ng-repeat="record in RecordsCount = ( records | orderBy:SortBy:ReverseSort | filter: searchFiltered)">
-                            <div class="row" style="margin-top:10px;padding-bottom:10px;border-bottom:1px solid #CECCCC;
-                            padding-right:15px;padding-left:15px">
-
-                                <div class="container" style="padding-right:0px;padding-left:0px">
-                                    <div class="col-xs-1" style="padding-right:0px;padding-left:0px"><img src="images/EmiratesFlightLogo.png" class="img-responsive" alt="" style="height:inherit;"></div>
-                                    <div class="col-xs-10" style="font-weight: bold;padding-left:10px;" data-toggle="modal" data-target="#flightdetail" ng-click="getRecord(record)">Emirates</div>
-                                </div>
-                                <div ng-repeat="leg in record.Legs">
-                                    <div class="f-detail">{{leg.DepartureTime}} {{leg.DepartureAirportCode}} &nbsp;&nbsp;<i class="fa fa-paper-plane"></i>&nbsp; {{leg.ArrivalTime}} {{leg.ArrivalAirportCode}}<span style="padding-left: 15px"><i class="fa fa-clock-o"></i>&nbsp;{{leg.Duration}}</span></div>
-                                </div>
-                                <div class="col-xs-8" style="padding-left:0px;">
-                                    <div>{{record.Stops}} Transit<span style="padding-left: 15px"><i class="fa fa-clock-o"></i>&nbsp;{{record.LayOver}}</span></div>
-                                    <div ng-if="record.WeelChair == 'true'">
-                                    	<div font-weight:bold;><i class="fa fa-wheelchair"></i>&nbsp;wheelchair friendly</span></div>
-                                    </div>
-                                </div>
-                                <div type="submit" class="btn btn-default col-xs-4" style="margin-top:7px;" ><a href="Experience.php" style="color:inherit;">${{record.TotalFare}}</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        </div>
 		    <!-- Modal -->
 		    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		        <div class="modal-dialog">
@@ -122,6 +147,12 @@
 
     var app = angular.module('App', ['checklist-model', 'angular.filter']);
 
+    app.config(['$httpProvider', function($httpProvider) {
+            $httpProvider.defaults.useXDomain = true;
+            delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        }
+    ]);
+
     app.controller('MainCtrl', ['$scope','$http', function ($scope,$http) {
 
         $scope.SortBy = "disabledFriendly"
@@ -130,36 +161,48 @@
         $scope.MaxDuration = 0
         $scope.MinLayover = 0;
         $scope.flightRecord = null;
-
-        // $http.get(originplace=&=&=&=1').success(function(data) {
-        //     alert(data);
-        // });
-        $http({
-            method: 'POST',
-            url: 'http://partners.api.skyscanner.net/apiservices/pricing/v1.0',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded','Accept':'application/json'},
-            data: {
-              apiKey:'ah091626517241820691765775750391',
-              country:'SG',
-              currency:'SGD',
-              locale:'en-GB',
-              originplace:'SIN-sky',
-              destinationplace:'JFK-sky',
-              outbounddate:'2015-03-27',
-              adults:'1'
-            }
-        }).success(function(data, status, headers, config) {
-            console.log( headers() );
-          });
-
+        // var allowCrossDomain = function(req, res, next) {
+        //     res.header('Access-Control-Allow-Origin', "*");
+        //     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        //     res.header('Access-Control-Allow-Headers', 'Content-Type');
+        // };
 
         // $http({
         //     method: 'POST',
+        //     datatype:'json',
         //     url: 'http://partners.api.skyscanner.net/apiservices/pricing/v1.0',
-        //     data: $.param({apiKey: "ah091626517241820691765775750391"}),
-        //     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        // })
-        //$scope.RecordsCount = 0;
+        //     headers: {
+        //       'Content-Type': 'application/x-www-form-urlencoded',
+        //       'Accept':'application/json',
+        //       'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+        //       'Access-Control-Allow-Origin': '*',
+        //       'Access-Control-Allow-Headers': 'origin, content-type, accept',
+        //       'Access-Control-Allow-Credentials': 'true',
+        //       'Cache-Control': 'max-age=86400',
+        //       // 'Content-Disposition': 'inline; filename=onemap.txt',
+        //       // 'Date': 'Sat, 21 Mar 2015 04:06:39 GMT',
+        //       // 'Server': 'nginx',
+        //       // 'X-Mashery-Responder': 'prod-j-worker-ap-southeast-1b-16.mashery.com',
+        //       // 'Content-Length': '116',
+        //       // 'Connection': 'keep-alive'
+
+        //     },
+        //     data: {
+        //       apiKey:'ah091626517241820691765775750391',
+        //       country:'SG',
+        //       currency:'SGD',
+        //       locale:'en-GB',
+        //       originplace:'SIN-sky',
+        //       destinationplace:'JFK-sky',
+        //       outbounddate:'2015-03-27',
+        //       adults:'1'
+        //     }
+        // }).success(function(data, status, headers, config) {
+        //     console.log("asdsahgd");
+
+        //     console.log(data);
+        //   });
+
 
         $scope.changeSort = function (sort) {
 
@@ -210,7 +253,7 @@
         $scope.checkMinLayover = function (layOver) {
 
             $scope.hIndex = layOver.indexOf('h');
-            if (parseInt(layOver.substring(0, $scope.hIndex)) <= parseInt($scope.MinLayover)) {
+            if (parseInt(layOver.substring(0, $scope.hIndex)) >= parseInt($scope.MinLayover)) {
                 return true;
             }
             else {
@@ -306,7 +349,7 @@
         "disabledFriendly": 1,
         "Currency": "SGD",
         "FlightType": "Departure",
-        "LayOver": "1h 20m",
+        "LayOver": "4h 20m",
         "Legs": [
             {
                 "DepartureAirportCode": "SIN",
@@ -634,8 +677,83 @@
      ];
 
     }]);
-
 </script>
+
+<?php
+// $url = 'http://partners.api.skyscanner.net/apiservices/pricing/v1.0';
+// $data = array('currency' => 'SGD','apiKey' => 'ah091626517241820691765775750391',
+//               'country' => 'SG',
+//                'locale' => 'en-GB',
+//                  'originplace' => 'SIN-sky',
+//                   'destinationplace' => 'JFK-sky',
+//                    'outbounddate' => '2015-03-27',
+//                     'adults'=> '1');
+
+// // use key 'http' even if you send the request to https://...
+// $options = array(
+//     'http' => array(
+//         'header'  => array( 
+//         "Content-type: application/x-www-form-urlencoded",
+//                             "Connection: close",
+//                             "Content-Length: 154"
+//                             // "Cache-Control:no-cache",
+//                             // "Accept:application/json",
+//                             // "Host: partners.api.skyscanner.net",
+//                             // "Accept-Encoding:gzip, deflate",
+//                             // "Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT",
+//                             // "Access-Control-Allow-Origin: *",
+//                             // "Access-Control-Allow-Headers: origin, content-type, accept",
+//                             // "Access-Control-Allow-Credentials: true"
+//                             ),
+//         'method'  => 'POST',
+//         'content' => http_build_query($data),
+//         'protocol_version' => '1.1'
+//     ),
+// );
+// $context  = stream_context_create($options);
+// $result = file_get_contents($url, false, $context);
+// $resultheader = get_headers($url);
+// var_dump(apache_request_headers());
+// var_dump($options);
+// var_dump($result);
+// var_dump($resultheader);
+
+
+
+
+$url = 'http://partners.api.skyscanner.net/apiservices/pricing/v1.0';
+$fields = array('currency' => 'SGD','apiKey' => 'ah091626517241820691765775750391',
+              'country' => 'SG',
+               'locale' => 'en-GB',
+                 'originplace' => 'SIN-sky',
+                  'destinationplace' => 'JFK-sky',
+                   'outbounddate' => '2015-03-27',
+                    'adults'=> '1');
+
+//url-ify the data for the POST
+// foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+// rtrim($fields_string,'&');
+$fields_string = http_build_query($fields);
+
+//open connection
+$ch = curl_init();
+
+//set the url, number of POST vars, POST data
+curl_setopt($ch,CURLOPT_URL,$url);
+curl_setopt($ch,CURLOPT_POST,count($fields));
+curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_VERBOSE, 1);
+curl_setopt($ch, CURLOPT_HEADER, 1);
+
+//execute post
+$header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+// $header = substr($response, 0, $header_size);
+// $body = substr($response, $header_size);
+$result = curl_exec($ch);
+// print "result";
+// print $result;
+?>
 
 
 <?php include_once("base_bottom.html"); ?>

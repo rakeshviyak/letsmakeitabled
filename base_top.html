@@ -1,9 +1,16 @@
+<?php 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept"); ?>
 <!doctype html>
 <!--[if IE 7 ]>    <html lang="en-gb" class="isie ie7 oldie no-js"> <![endif]-->
 <!--[if IE 8 ]>    <html lang="en-gb" class="isie ie8 oldie no-js"> <![endif]-->
 <!--[if IE 9 ]>    <html lang="en-gb" class="isie ie9 no-js"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
 <html lang="en-gb" class="no-js">
+
+
 <!--<![endif]-->
 <head>
 <meta charset="utf-8">
@@ -64,7 +71,7 @@ type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
       <div id="main-nav" class="collapse navbar-collapse">
         <ul class="nav navbar-nav" id="mainNav">
           <li class="" id="firstLink"><a href="index.php" class="scroll-link">Home</a></li>
-          <li><a href="#services" class="scroll-link">Services</a></li>
+          <!-- <li><a href="#services" class="scroll-link">Services</a></li> -->
           <li><a href="#aboutUs" class="scroll-link">About Us</a></li>
           <li><a href="#contactUs" class="scroll-link">Contact Us</a></li>
         </ul>

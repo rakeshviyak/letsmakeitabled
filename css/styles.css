@@ -893,8 +893,13 @@ body {
 }
 footer {
 	border-top: 1px solid #303030;
-	padding: 45px 0;
+	padding: 25px 0;
 	background: #fff;
+	 clear: both;
+	 position: relative;
+	 z-index: 10;
+	 height: 5em;
+	 margin-top: -5em;
 }
 .social a:hover {
 	color: #000;
@@ -1284,3 +1289,7 @@ border-bottom:1px solid #000;
     height: 350px;
     top: calc(70% - 200px) !important;
 }
+
+html, body, .container { height: 100%; }
+body > .container { height: auto; min-height: 100%; }
+#content { padding-bottom: 5em;margin-top:100px; margin-bottom: 50px;}

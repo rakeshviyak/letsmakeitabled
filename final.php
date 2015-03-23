@@ -1,7 +1,9 @@
 <?php include_once("base_top.html"); ?>
  
-  <div class="container" style="margin-top:80px;margin-bottom:20px;">
+<div class="container">
+<div id="content">
  	
+  <div class="col-md-6">
   	<h3>Booking Details</h3>
 
    <div class="form-group">
@@ -20,7 +22,8 @@
       <label for="exampleInputName2">Nationality</label>
       <input type="text" class="form-control" id="exampleInputName2" placeholder="United Kingdom">
     </div>
-    
+  </div>
+  <div class="col-md-6">    
     <h3>Payment Details</h3>
 
    <div class="form-group">
@@ -31,11 +34,12 @@
       <label for="exampleInputName2">CVV</label>
       <input type="text" class="form-control" id="exampleInputName2" placeholder="">
     </div>
-     <div class="form-group"> 
-        <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#byeModal">Confirm Booking </button> 
-    </div>   
-
   </div>
+   <div class="form-group"> 
+      <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#byeModal">Confirm Booking </button> 
+  </div>   
+</div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="byeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
